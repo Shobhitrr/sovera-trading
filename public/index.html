@@ -3,12 +3,398 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#0a0f1e" />
-    <meta name="description" content="Sovera Everyday Trading - Top 50 High-Demand Products across Dubai, India, Canada, US, UK" />
+    <meta name="theme-color" content="#020617" />
+    <meta name="description" content="Sovera Everyday Trading — Premium Global Import/Export Intelligence across Dubai, India, Canada, US & UK" />
+    <meta property="og:title" content="Sovera Everyday Trading" />
+    <meta property="og:description" content="Top 50 High-Demand Products · Real-Time Market Intelligence · 5 Global Markets" />
     <title>Sovera Everyday Trading</title>
+
+    <!-- Premium Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      :root {
+        --bg-deep:       #020617;
+        --bg-dark:       #0a0f1e;
+        --bg-card:       #0d1424;
+        --bg-card-hover: #121929;
+        --accent-blue:   #3b82f6;
+        --accent-indigo: #6366f1;
+        --accent-violet: #8b5cf6;
+        --accent-cyan:   #06b6d4;
+        --accent-gold:   #f59e0b;
+        --accent-green:  #10b981;
+        --accent-red:    #ef4444;
+        --text-primary:  #f1f5f9;
+        --text-secondary:#94a3b8;
+        --text-muted:    #475569;
+        --border:        rgba(255,255,255,0.07);
+        --glow-blue:     0 0 40px rgba(99,102,241,0.3);
+        --glow-gold:     0 0 40px rgba(245,158,11,0.3);
+        --font-main:     'Space Grotesk', 'Inter', system-ui, sans-serif;
+        --font-mono:     'JetBrains Mono', monospace;
+      }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        background: var(--bg-deep);
+        color: var(--text-primary);
+        font-family: var(--font-main);
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      /* ── Scrollbar ── */
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: var(--bg-deep); }
+      ::-webkit-scrollbar-thumb { background: var(--accent-indigo); border-radius: 3px; }
+
+      /* ── Selection ── */
+      ::selection { background: rgba(99,102,241,0.35); color: #fff; }
+
+      /* ── Global Animations ── */
+      @keyframes floatY {
+        0%,100% { transform: translateY(0px); }
+        50%      { transform: translateY(-18px); }
+      }
+      @keyframes floatX {
+        0%,100% { transform: translateX(0px) rotate(0deg); }
+        50%      { transform: translateX(12px) rotate(3deg); }
+      }
+      @keyframes pulse-glow {
+        0%,100% { opacity: 0.6; box-shadow: 0 0 20px rgba(99,102,241,0.4); }
+        50%      { opacity: 1;   box-shadow: 0 0 60px rgba(99,102,241,0.8); }
+      }
+      @keyframes rotate3d {
+        0%   { transform: rotateY(0deg) rotateX(0deg); }
+        25%  { transform: rotateY(90deg) rotateX(15deg); }
+        50%  { transform: rotateY(180deg) rotateX(0deg); }
+        75%  { transform: rotateY(270deg) rotateX(-15deg); }
+        100% { transform: rotateY(360deg) rotateX(0deg); }
+      }
+      @keyframes orbit {
+        from { transform: rotate(0deg) translateX(120px) rotate(0deg); }
+        to   { transform: rotate(360deg) translateX(120px) rotate(-360deg); }
+      }
+      @keyframes orbit2 {
+        from { transform: rotate(120deg) translateX(90px) rotate(-120deg); }
+        to   { transform: rotate(480deg) translateX(90px) rotate(-480deg); }
+      }
+      @keyframes orbit3 {
+        from { transform: rotate(240deg) translateX(150px) rotate(-240deg); }
+        to   { transform: rotate(600deg) translateX(150px) rotate(-600deg); }
+      }
+      @keyframes ticker {
+        0%   { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+      @keyframes shimmer {
+        0%   { background-position: -200% center; }
+        100% { background-position: 200% center; }
+      }
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes scaleIn {
+        from { opacity: 0; transform: scale(0.85); }
+        to   { opacity: 1; transform: scale(1); }
+      }
+      @keyframes slideInLeft {
+        from { opacity: 0; transform: translateX(-40px); }
+        to   { opacity: 1; transform: translateX(0); }
+      }
+      @keyframes gradientShift {
+        0%   { background-position: 0% 50%; }
+        50%  { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      @keyframes particleDrift {
+        0%   { transform: translate(0,0) scale(1); opacity: 0.6; }
+        33%  { transform: translate(30px,-40px) scale(1.1); opacity: 1; }
+        66%  { transform: translate(-20px,-70px) scale(0.9); opacity: 0.8; }
+        100% { transform: translate(10px,-120px) scale(0.5); opacity: 0; }
+      }
+      @keyframes ringPulse {
+        0%   { transform: scale(1); opacity: 0.8; }
+        100% { transform: scale(2.2); opacity: 0; }
+      }
+      @keyframes countUp {
+        from { opacity: 0; transform: translateY(10px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes borderFlow {
+        0%,100% { border-color: rgba(99,102,241,0.5); box-shadow: 0 0 20px rgba(99,102,241,0.2); }
+        33%      { border-color: rgba(139,92,246,0.5); box-shadow: 0 0 20px rgba(139,92,246,0.2); }
+        66%      { border-color: rgba(6,182,212,0.5);  box-shadow: 0 0 20px rgba(6,182,212,0.2); }
+      }
+      @keyframes spin3d {
+        0%   { transform: perspective(600px) rotateY(0deg); }
+        100% { transform: perspective(600px) rotateY(360deg); }
+      }
+      @keyframes glowPulse {
+        0%,100% { text-shadow: 0 0 20px rgba(99,102,241,0.8), 0 0 40px rgba(139,92,246,0.4); }
+        50%      { text-shadow: 0 0 40px rgba(99,102,241,1),   0 0 80px rgba(139,92,246,0.8); }
+      }
+      @keyframes scanLine {
+        0%   { top: -2px; }
+        100% { top: 100%; }
+      }
+      @keyframes blink {
+        0%,100% { opacity: 1; }
+        50%      { opacity: 0; }
+      }
+
+      /* ── Utility Classes ── */
+      .animate-float      { animation: floatY 4s ease-in-out infinite; }
+      .animate-float-slow { animation: floatY 7s ease-in-out infinite; }
+      .animate-float-x    { animation: floatX 5s ease-in-out infinite; }
+      .animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+      .animate-spin3d     { animation: spin3d 8s linear infinite; }
+      .animate-fadeInUp   { animation: fadeInUp 0.7s ease forwards; }
+      .animate-scaleIn    { animation: scaleIn 0.5s ease forwards; }
+      .animate-shimmer {
+        background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.15) 50%, transparent 100%);
+        background-size: 200% auto;
+        animation: shimmer 2s linear infinite;
+      }
+      .gradient-text {
+        background: linear-gradient(135deg, #a5b4fc, #818cf8, #c084fc, #38bdf8);
+        background-size: 300% 300%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: gradientShift 4s ease infinite;
+      }
+      .gold-text {
+        background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706, #fbbf24);
+        background-size: 300% 300%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: gradientShift 3s ease infinite;
+      }
+      .glass {
+        background: rgba(255,255,255,0.04);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255,255,255,0.08);
+      }
+      .glass-strong {
+        background: rgba(255,255,255,0.07);
+        backdrop-filter: blur(30px);
+        -webkit-backdrop-filter: blur(30px);
+        border: 1px solid rgba(255,255,255,0.12);
+      }
+      .card-3d {
+        transform-style: preserve-3d;
+        transition: transform 0.5s cubic-bezier(0.23,1,0.32,1), box-shadow 0.5s ease;
+      }
+      .card-3d:hover {
+        transform: perspective(800px) rotateX(-4deg) rotateY(4deg) translateY(-8px) scale(1.02);
+        box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 40px rgba(99,102,241,0.2);
+      }
+      .btn-premium {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s cubic-bezier(0.23,1,0.32,1);
+      }
+      .btn-premium::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .btn-premium:hover::before { opacity: 1; }
+      .btn-premium:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(99,102,241,0.4); }
+      .btn-premium:active { transform: translateY(0); }
+
+      /* ── Particle Canvas ── */
+      #particle-canvas {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* ── Grid mesh background ── */
+      .grid-bg {
+        background-image:
+          linear-gradient(rgba(99,102,241,0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(99,102,241,0.05) 1px, transparent 1px);
+        background-size: 60px 60px;
+      }
+
+      /* ── Glow orbs ── */
+      .orb {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(100px);
+        pointer-events: none;
+        z-index: 0;
+      }
+      .orb-1 { width: 600px; height: 600px; background: rgba(99,102,241,0.12); top: -200px; right: -200px; }
+      .orb-2 { width: 500px; height: 500px; background: rgba(139,92,246,0.10); bottom: 20%; left: -150px; }
+      .orb-3 { width: 400px; height: 400px; background: rgba(6,182,212,0.08);  top: 50%; right: 10%; }
+
+      /* ── Input & Select resets ── */
+      input, select, button { font-family: var(--font-main); }
+      input:focus { outline: 2px solid rgba(99,102,241,0.5); outline-offset: 2px; }
+      select:focus { outline: 2px solid rgba(99,102,241,0.5); outline-offset: 2px; }
+
+      /* ── Ticker ── */
+      .ticker-track { animation: ticker 30s linear infinite; }
+      .ticker-track:hover { animation-play-state: paused; }
+
+      /* ── Responsive ── */
+      @media (max-width: 768px) {
+        .orb { display: none; }
+        .card-3d:hover { transform: translateY(-4px); }
+      }
+
+      /* ── Stat counter animation ── */
+      .stat-number { animation: countUp 0.6s ease forwards; }
+
+      /* ── Progress bar animation ── */
+      .progress-bar {
+        transition: width 1.2s cubic-bezier(0.23,1,0.32,1);
+      }
+
+      /* ── Noise texture overlay ── */
+      body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0.4;
+      }
+
+      /* ── Scan line effect ── */
+      .scan-line {
+        position: absolute;
+        left: 0; right: 0; height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(99,102,241,0.5), transparent);
+        animation: scanLine 4s linear infinite;
+        pointer-events: none;
+      }
+    </style>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <!-- Atmospheric background orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- Particle canvas (driven by inline script) -->
+    <canvas id="particle-canvas"></canvas>
+
     <div id="root"></div>
+
+    <!-- Particle System -->
+    <script>
+      (function() {
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let W, H, particles = [], animId;
+
+        function resize() {
+          W = canvas.width  = window.innerWidth;
+          H = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        const COLORS = ['#6366f1','#8b5cf6','#06b6d4','#3b82f6','#a5b4fc'];
+
+        function rand(min, max) { return Math.random() * (max - min) + min; }
+
+        function createParticle() {
+          return {
+            x: rand(0, W),
+            y: rand(0, H),
+            r: rand(0.5, 2.5),
+            vx: rand(-0.3, 0.3),
+            vy: rand(-0.5, -0.1),
+            alpha: rand(0.2, 0.8),
+            color: COLORS[Math.floor(Math.random() * COLORS.length)],
+            life: 0,
+            maxLife: rand(150, 400),
+          };
+        }
+
+        for (let i = 0; i < 120; i++) particles.push(createParticle());
+
+        // Connection lines between nearby particles
+        function drawConnections() {
+          for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+              const dx = particles[i].x - particles[j].x;
+              const dy = particles[i].y - particles[j].y;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+              if (dist < 120) {
+                const alpha = (1 - dist / 120) * 0.12;
+                ctx.beginPath();
+                ctx.strokeStyle = `rgba(99,102,241,${alpha})`;
+                ctx.lineWidth = 0.5;
+                ctx.moveTo(particles[i].x, particles[i].y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.stroke();
+              }
+            }
+          }
+        }
+
+        function draw() {
+          ctx.clearRect(0, 0, W, H);
+          drawConnections();
+
+          for (let i = particles.length - 1; i >= 0; i--) {
+            const p = particles[i];
+            p.x  += p.vx;
+            p.y  += p.vy;
+            p.life++;
+
+            const lifeRatio = p.life / p.maxLife;
+            const alpha = p.alpha * (lifeRatio < 0.2 ? lifeRatio / 0.2 : lifeRatio > 0.8 ? (1 - lifeRatio) / 0.2 : 1);
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fillStyle = p.color + Math.floor(alpha * 255).toString(16).padStart(2,'0');
+            ctx.fill();
+
+            // Glow
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
+            const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 3);
+            grad.addColorStop(0, p.color + Math.floor(alpha * 80).toString(16).padStart(2,'0'));
+            grad.addColorStop(1, 'transparent');
+            ctx.fillStyle = grad;
+            ctx.fill();
+
+            if (p.life >= p.maxLife || p.y < -20) {
+              particles[i] = createParticle();
+              particles[i].y = H + 10;
+            }
+          }
+
+          animId = requestAnimationFrame(draw);
+        }
+
+        draw();
+      })();
+    </script>
   </body>
 </html>
