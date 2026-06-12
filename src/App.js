@@ -1,5 +1,12 @@
 import { useState, useEffect } from "react";
+import Navbar from "./components/Navbar";
+import HeroSection from "./components/HeroSection";
+import Ticker from "./components/Ticker";
+import MarketFilter from "./components/MarketFilter";
+import ProductCard from "./components/ProductCard";
+import Footer from "./components/Footer";
 
+// ─────────────────────────────────────── DATA ───────────────────────────────────────
 const PRODUCTS = [
   // Dubai
   { id: 1, name: "Saffron (Premium Grade)", category: "Spices", market: "Dubai", demand: 97, supply: 32, unit: "per kg", minQty: "50g", trend: "up", tag: "🔥 Hot" },
@@ -62,177 +69,97 @@ const PRODUCTS = [
   { id: 50, name: "CBD Oil (Full Spectrum)", category: "Health", market: "UK", demand: 87, supply: 40, unit: "per bottle", minQty: "1 bottle", trend: "up", tag: "🆕 Rising" },
 ];
 
-const MARKETS = ["All", "Dubai", "India", "Canada", "US", "UK"];
 const CATEGORIES = ["All", ...new Set(PRODUCTS.map(p => p.category))];
-
-const MARKET_FLAGS = { Dubai: "🇦🇪", India: "🇮🇳", Canada: "🇨🇦", US: "🇺🇸", UK: "🇬🇧" };
 
 function getRating(demand, supply) {
   const score = (demand - supply * 0.4) / 10;
   return Math.min(5, Math.max(1, score)).toFixed(1);
 }
 
-function getGapColor(demand, supply) {
-  const gap = demand - supply;
-  if (gap > 50) return "#ef4444";
-  if (gap > 30) return "#f97316";
-  if (gap > 15) return "#eab308";
-  return "#22c55e";
-}
-
-function StarRating({ rating }) {
-  const full = Math.floor(rating);
-  const half = rating % 1 >= 0.5;
-  return (
-    <span style={{ color: "#f59e0b", fontSize: "14px", letterSpacing: "1px" }}>
-      {"★".repeat(full)}{half ? "½" : ""}{"☆".repeat(5 - full - (half ? 1 : 0))}
-      <span style={{ color: "#94a3b8", fontSize: "12px", marginLeft: "4px" }}>{rating}</span>
-    </span>
-  );
-}
-
-function ProductCard({ product, index }) {
-  const rating = getRating(product.demand, product.supply);
-  const gap = product.demand - product.supply;
-  const gapColor = getGapColor(product.demand, product.supply);
-
-  return (
-    <div style={{
-      background: "rgba(255,255,255,0.04)",
-      border: "1px solid rgba(255,255,255,0.08)",
-      borderRadius: "16px",
-      padding: "20px",
-      display: "flex",
-      flexDirection: "column",
-      gap: "12px",
-      transition: "transform 0.2s, box-shadow 0.2s",
-      cursor: "default",
-      position: "relative",
-      overflow: "hidden",
-    }}
-      onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.boxShadow = "0 12px 40px rgba(0,0,0,0.4)"; }}
-      onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; e.currentTarget.style.boxShadow = "none"; }}
-    >
-      <div style={{ position: "absolute", top: "12px", right: "14px", fontSize: "11px", background: gapColor + "22", color: gapColor, border: `1px solid ${gapColor}44`, borderRadius: "20px", padding: "2px 10px", fontWeight: 700 }}>
-        {product.tag}
-      </div>
-      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-        <span style={{ fontSize: "22px", background: "rgba(255,255,255,0.06)", borderRadius: "10px", width: "40px", height: "40px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          {MARKET_FLAGS[product.market]}
-        </span>
-        <div>
-          <div style={{ fontSize: "12px", color: "#64748b", fontWeight: 600, textTransform: "uppercase", letterSpacing: "1px" }}>#{index + 1} · {product.market}</div>
-          <div style={{ fontSize: "16px", fontWeight: 700, color: "#f1f5f9", lineHeight: 1.2 }}>{product.name}</div>
-        </div>
-      </div>
-
-      <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-        <span style={{ background: "rgba(99,102,241,0.15)", color: "#a5b4fc", borderRadius: "8px", padding: "2px 10px", fontSize: "11px", fontWeight: 600 }}>{product.category}</span>
-        <span style={{ background: "rgba(255,255,255,0.06)", color: "#94a3b8", borderRadius: "8px", padding: "2px 10px", fontSize: "11px" }}>Min: {product.minQty}</span>
-        <span style={{ background: "rgba(255,255,255,0.06)", color: "#94a3b8", borderRadius: "8px", padding: "2px 10px", fontSize: "11px" }}>{product.unit}</span>
-      </div>
-
-      <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px" }}>
-          <span style={{ color: "#22c55e" }}>Demand {product.demand}%</span>
-          <span style={{ color: "#f97316" }}>Supply {product.supply}%</span>
-        </div>
-        <div style={{ background: "rgba(255,255,255,0.07)", borderRadius: "6px", height: "6px", position: "relative", overflow: "hidden" }}>
-          <div style={{ position: "absolute", left: 0, top: 0, height: "100%", width: `${product.demand}%`, background: "linear-gradient(90deg,#22c55e,#4ade80)", borderRadius: "6px", opacity: 0.7 }} />
-          <div style={{ position: "absolute", left: 0, top: 0, height: "100%", width: `${product.supply}%`, background: "linear-gradient(90deg,#ef4444,#f97316)", borderRadius: "6px", opacity: 0.5 }} />
-        </div>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <StarRating rating={parseFloat(rating)} />
-          <span style={{ fontSize: "11px", color: gapColor, fontWeight: 700 }}>Gap: +{gap}%</span>
-        </div>
-      </div>
-
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "10px" }}>
-        <span style={{ fontSize: "11px", color: product.trend === "up" ? "#4ade80" : product.trend === "down" ? "#f87171" : "#94a3b8", fontWeight: 700 }}>
-          {product.trend === "up" ? "↑ Trending Up" : product.trend === "down" ? "↓ Declining" : "→ Stable"}
-        </span>
-        <button style={{ background: "linear-gradient(135deg,#6366f1,#8b5cf6)", color: "#fff", border: "none", borderRadius: "8px", padding: "5px 14px", fontSize: "12px", fontWeight: 700, cursor: "pointer" }}
-          onClick={() => alert(`Enquiry sent for: ${product.name} (${product.market})\n\nOur team will contact you within 24 hours.`)}>
-          Enquire
-        </button>
-      </div>
-    </div>
-  );
-}
-
+// ─────────────────────────────────────── APP ───────────────────────────────────────
 export default function App() {
   const [market, setMarket] = useState("All");
   const [category, setCategory] = useState("All");
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState("demand");
-  const [today, setToday] = useState("");
-
-  useEffect(() => {
-    setToday(new Date().toLocaleDateString("en-GB", { weekday: "long", year: "numeric", month: "long", day: "numeric" }));
-  }, []);
 
   const filtered = PRODUCTS
-    .filter(p => (market === "All" || p.market === market) && (category === "All" || p.category === category) && (p.name.toLowerCase().includes(search.toLowerCase()) || p.category.toLowerCase().includes(search.toLowerCase())))
-    .sort((a, b) => sortBy === "demand" ? b.demand - a.demand : sortBy === "gap" ? (b.demand - b.supply) - (a.demand - a.supply) : parseFloat(getRating(b.demand, b.supply)) - parseFloat(getRating(a.demand, a.supply)));
+    .filter(p =>
+      (market === "All" || p.market === market) &&
+      (category === "All" || p.category === category) &&
+      (p.name.toLowerCase().includes(search.toLowerCase()) ||
+       p.category.toLowerCase().includes(search.toLowerCase()))
+    )
+    .sort((a, b) => {
+      if (sortBy === "demand") return b.demand - a.demand;
+      if (sortBy === "gap") return (b.demand - b.supply) - (a.demand - a.supply);
+      return parseFloat(getRating(b.demand, b.supply)) - parseFloat(getRating(a.demand, a.supply));
+    });
+
+  const hotCount = filtered.filter(p => p.demand >= 90).length;
+  const shortageCount = filtered.filter(p => (p.demand - p.supply) > 40).length;
 
   return (
-    <div style={{ minHeight: "100vh", background: "#0a0f1e", color: "#f1f5f9", fontFamily: "'Segoe UI', system-ui, sans-serif" }}>
-      {/* Header */}
-      <div style={{ background: "linear-gradient(135deg,#0f172a,#1e1b4b)", borderBottom: "1px solid rgba(99,102,241,0.2)", padding: "24px 20px 20px", textAlign: "center", position: "sticky", top: 0, zIndex: 100, backdropFilter: "blur(10px)" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", marginBottom: "4px" }}>
-          <span style={{ fontSize: "32px" }}>🌐</span>
-          <h1 style={{ margin: 0, fontSize: "clamp(20px,4vw,30px)", fontWeight: 900, background: "linear-gradient(135deg,#a5b4fc,#818cf8,#c084fc)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-            Sovera Everyday Trading
-          </h1>
-        </div>
-        <div style={{ fontSize: "12px", color: "#64748b", marginBottom: "16px" }}>
-          📅 {today} &nbsp;·&nbsp; Top 50 High-Demand Products · Updated Daily
-        </div>
-        <div style={{ display: "flex", gap: "8px", justifyContent: "center", flexWrap: "wrap" }}>
-          {MARKETS.map(m => (
-            <button key={m} onClick={() => setMarket(m)} style={{ background: market === m ? "linear-gradient(135deg,#6366f1,#8b5cf6)" : "rgba(255,255,255,0.06)", color: market === m ? "#fff" : "#94a3b8", border: "1px solid " + (market === m ? "transparent" : "rgba(255,255,255,0.1)"), borderRadius: "20px", padding: "6px 14px", fontSize: "13px", cursor: "pointer", fontWeight: 600, transition: "all 0.2s" }}>
-              {m === "All" ? "🌍 All Markets" : MARKET_FLAGS[m] + " " + m}
-            </button>
-          ))}
-        </div>
-      </div>
+    <div className="grid-bg" style={{ minHeight: "100vh", position: "relative", zIndex: 2 }}>
+      {/* ── Navigation ── */}
+      <Navbar />
 
-      {/* Controls */}
-      <div style={{ padding: "16px 20px", display: "flex", gap: "10px", flexWrap: "wrap", maxWidth: "1200px", margin: "0 auto" }}>
-        <input value={search} onChange={e => setSearch(e.target.value)} placeholder="🔍 Search products..." style={{ flex: "1", minWidth: "180px", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "10px", padding: "10px 14px", color: "#f1f5f9", fontSize: "14px", outline: "none" }} />
-        <select value={category} onChange={e => setCategory(e.target.value)} style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "10px", padding: "10px 14px", color: "#f1f5f9", fontSize: "13px", cursor: "pointer" }}>
-          {CATEGORIES.map(c => <option key={c} value={c} style={{ background: "#1e293b" }}>{c}</option>)}
-        </select>
-        <select value={sortBy} onChange={e => setSortBy(e.target.value)} style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "10px", padding: "10px 14px", color: "#f1f5f9", fontSize: "13px", cursor: "pointer" }}>
-          <option value="demand" style={{ background: "#1e293b" }}>Sort: Demand</option>
-          <option value="gap" style={{ background: "#1e293b" }}>Sort: Supply Gap</option>
-          <option value="rating" style={{ background: "#1e293b" }}>Sort: Rating</option>
-        </select>
-      </div>
+      {/* ── Hero Section with 3D Globe ── */}
+      <HeroSection />
 
-      {/* Stats Bar */}
-      <div style={{ display: "flex", gap: "12px", padding: "0 20px 16px", maxWidth: "1200px", margin: "0 auto", flexWrap: "wrap" }}>
-        {[["📦", "Total Products", filtered.length], ["🔥", "High Demand (90%+)", filtered.filter(p => p.demand >= 90).length], ["⚡", "Supply Shortage", filtered.filter(p => (p.demand - p.supply) > 40).length]].map(([icon, label, val]) => (
-          <div key={label} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "12px", padding: "10px 16px", display: "flex", alignItems: "center", gap: "8px" }}>
-            <span style={{ fontSize: "18px" }}>{icon}</span>
-            <div>
-              <div style={{ fontSize: "18px", fontWeight: 800, color: "#a5b4fc" }}>{val}</div>
-              <div style={{ fontSize: "10px", color: "#64748b", textTransform: "uppercase", letterSpacing: "0.5px" }}>{label}</div>
+      {/* ── Live Ticker ── */}
+      <Ticker />
+
+      {/* ── Market Filter + Search Controls ── */}
+      <MarketFilter
+        market={market}
+        setMarket={setMarket}
+        category={category}
+        setCategory={setCategory}
+        categories={CATEGORIES}
+        search={search}
+        setSearch={setSearch}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+        filteredCount={filtered.length}
+        hotCount={hotCount}
+        shortageCount={shortageCount}
+      />
+
+      {/* ── Product Grid ── */}
+      <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))",
+        gap: "20px",
+        padding: "0 32px 60px",
+        maxWidth: "1300px",
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 10,
+      }}>
+        {filtered.map((p, i) => (
+          <ProductCard key={p.id} product={p} index={i} />
+        ))}
+        {filtered.length === 0 && (
+          <div style={{
+            gridColumn: "1 / -1",
+            textAlign: "center",
+            padding: "80px 0",
+            color: "#64748b",
+          }}>
+            <div style={{ fontSize: "48px", marginBottom: "16px", opacity: 0.5 }}>🔍</div>
+            <div style={{ fontSize: "18px", fontWeight: 600, color: "#94a3b8", marginBottom: "8px" }}>
+              No products found
+            </div>
+            <div style={{ fontSize: "14px" }}>
+              Try adjusting your filters or search query
             </div>
           </div>
-        ))}
+        )}
       </div>
 
-      {/* Grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(300px,1fr))", gap: "16px", padding: "0 20px 40px", maxWidth: "1200px", margin: "0 auto" }}>
-        {filtered.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
-        {filtered.length === 0 && <div style={{ gridColumn: "1/-1", textAlign: "center", color: "#64748b", padding: "60px 0", fontSize: "16px" }}>No products match your filters.</div>}
-      </div>
-
-      {/* Footer */}
-      <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", padding: "20px", textAlign: "center", color: "#475569", fontSize: "12px" }}>
-        © 2025 Sovera Everyday Trading · Data updated daily · Markets: 🇦🇪 Dubai · 🇮🇳 India · 🇨🇦 Canada · 🇺🇸 US · 🇬🇧 UK
-      </div>
+      {/* ── Footer ── */}
+      <Footer />
     </div>
   );
 }
